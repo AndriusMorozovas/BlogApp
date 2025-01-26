@@ -14,7 +14,8 @@ const UpdatePage = ({secret}) => {
             image: imageRef.current.value,
             description: descriptionRef.current.value,
             title: titleRef.current.value,
-            secretKey: secret
+            secretKey: secret,
+            id: post.id
         }
 
         const options = {

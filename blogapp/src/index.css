@@ -124,9 +124,14 @@ code {
 
 .container {
   width: 1200px;
-  height: 800px;
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid black;
+}
+
+
+.toolbar, .sidebar, .footer {
+  border: 1px solid black;
 }
 
 .image-box img {

@@ -1,46 +1,33 @@
-import React from 'react';
-import {useEffect, useState, useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, {useRef, useState} from 'react';
+import useStore from "../store/main";
+import {useNavigate} from "react-router-dom";
 
-const LoginPage = ({setLogin}) => {
+const LoginPage = () => {
 
     const nameRef = useRef()
     const passRef = useRef()
-    const nav = useNavigate()
+    const {currentUser} = useStore();
+    const nav = useNavigate();
 
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
 
     function auth() {
         const user = {
             name: nameRef.current.value,
             password: passRef.current.value
         }
-
-        const options = {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(user)
+        if (currentUser.name !== user.name) {
+            return setError("User does not exist")
         }
-
-
-        fetch("http://167.99.138.67:1111/login", options)
-            .then(res => res.json())
-            .then(response => {
-                console.log(response)
-
-                if(response.success) {
-                    setError(null)
-                    setLogin(response.secretKey, user.name)
-                    nav("/upload")
-                } else {
-                    setError(response.message)
-                }
-            })
-
-        console.log(user)
+        if (currentUser.password !== user.password) {
+            return setError("Incorrect password")
+        }
+        else {
+            setError("Login successful!")
+            nav("/profile")
+        }
     }
+
 
     return (
         <div className="d-flex j-center">
